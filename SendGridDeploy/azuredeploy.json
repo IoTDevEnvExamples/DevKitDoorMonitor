@@ -1,0 +1,61 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "password": {
+            "type": "securestring"
+        },
+        "plan_name": {
+            "type": "string",
+            "defaultValue": "free - $0 / month",
+            "allowedValues": [
+                "free - $0 / month",
+                "bronze - $9.95 / month",
+                "silver - $79.95 / month"
+            ]
+        },
+        "email": {
+            "type": "string"
+        },
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "company": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "website": {
+            "type": "string",
+            "defaultValue": ""
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-01-01",
+            "name": "[parameters('name')]",
+            "type": "Sendgrid.Email/accounts",
+            "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "[first(split(parameters('plan_name'), ' '))]",
+                "publisher": "Sendgrid",
+                "product": "sendgrid_azure",
+                "promotionCode": ""
+            },
+            "properties": {
+                "password": "[parameters('password')]",
+                "acceptMarketingEmails": "0",
+                "email": "[parameters('email')]",
+                "firstName": "[parameters('firstName')]",
+                "lastName": "[parameters('lastName')]",
+                "company": "[parameters('company')]",
+                "website": "[parameters('website')]"
+            }
+        }
+    ]
+}
