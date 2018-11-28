@@ -24,7 +24,7 @@ namespace IoTWorkbench
             if (!response.IsSuccessStatusCode)
             {
                 // Show the error for the failure.
-                var errorMessage = response.StatusCode.ToString();
+                var errorMessage = response.Content.ReadAsStringAsync();
                 throw new Exception(
                     $"SendGrid failed to send email. Code: {response.StatusCode}, error: {errorMessage}");
             }
