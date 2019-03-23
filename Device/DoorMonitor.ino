@@ -101,7 +101,7 @@ static void InitMagnetometer()
 
 void CheckMagnetometerStatus()
 {
-  char *message;
+  const char *message;
   int delta = 30;
   bool curOpened = false;
   if (abs(base_x - axes[0]) < delta && abs(base_y - axes[1]) < delta && abs(base_z - axes[2]) < delta)
